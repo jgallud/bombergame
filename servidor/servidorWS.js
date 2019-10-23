@@ -30,9 +30,11 @@ function ServidorWS(){
     			cli.enviarATodosMenosRemitente(socket,idp,"nuevoJugador",partida.jugadores);
     		});
     		socket.on("salir",function(idp,nick){
-    			juego.salir(idp,nick);
+    			var partida=juego.salir(idp,nick);                
     			cli.enviarRemitente(socket,"saliste");
-    			cli.enviarATodosMenosRemitente(socket,idp,"saleJugador",partida.jugadores);
+                if (partida!=undefined){
+        			cli.enviarATodosMenosRemitente(socket,idp,"saleJugador",partida.jugadores);
+                }
     		});
     	});
     }

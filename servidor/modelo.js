@@ -46,6 +46,7 @@ function Juego(){
 		if (this.comprobarJugadores(idp)==0){
 			this.eliminarPartida(idp);
 		}
+		return this.partidas[idp];
 	}
 	this.comprobarJugadores=function(nombrePartida){
 		return Object.keys(this.partidas[nombrePartida].jugadores).length;

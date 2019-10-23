@@ -35,6 +35,7 @@ function ClienteWS(nick){
 			mostrarListaPartidas(partidas);
 		});
 		this.socket.on('unido',function(partida){
+			cli.idp=partida.idp;
 			mostrarPartida(partida);
 			mostrarListaJugadores(partida.jugadores);
 		});

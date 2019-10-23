@@ -31,6 +31,8 @@ function mostrarAviso(msg){
 }
 
 function mostrarCrearPartida(nick){
+	$('#mLP').remove();
+	$('#mP').remove();
 	var cadena="<div id='mCP'>";
 	cadena=cadena+"<h3>Bienvenido "+nick+"</h3>";
 	cadena=cadena+"<div class='row'><div class='col-sm-8'>";
@@ -62,7 +64,7 @@ function mostrarPartida(data){
 	$('#mLP').remove();
 	var cadena="<div id='mP'>";
 	cadena=cadena+"<h3>Bienvenido a la partida: "+data.nombre+"</h3>";
-	cadena=cadena+'<p><button type="button" id="salirBtn" class="btn btn-primary btn-md" onclick="ws.salir()"">Salir</button></p>';
+	cadena=cadena+'<p><button type="button" id="salirBtn" class="btn btn-primary btn-md" onclick="ws.salir()"">Salir</button></p></div>';
 	$('#inicio').append(cadena);
 }
 
