@@ -20,6 +20,10 @@ function ClienteWS(nick){
 	this.salir=function(){
 		this.socket.emit("salir",this.idp,this.nick);
 	}
+	this.preparado=function(){
+		$('#preparadoBtn').remove();
+		this.socket.emit("preparado",this.idp,this.nick);
+	}
 	this.lanzarSocketSrv=function(){
 		var cli=this;
 		this.socket.on('connect', function(){   						
@@ -46,6 +50,9 @@ function ClienteWS(nick){
 			mostrarCrearPartida(this.nick);
 		});
 		this.socket.on('saleJugador',function(jugadores){
+			mostrarListaJugadores(jugadores);
+		});
+		this.socket.on('otropreparado',function(jugadores){
 			mostrarListaJugadores(jugadores);
 		})
 	}

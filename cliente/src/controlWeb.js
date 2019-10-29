@@ -1,5 +1,15 @@
 
 var nick;
+
+function comprobarUsuario(){
+	if ($.cookie("usr")){
+		rest.comprobarUsuario();
+	}
+	else{
+		mostrarAgregarUsuario();
+	}
+}
+
 function mostrarAgregarUsuario(){
 	var cadena="<div id='mAU'>";
 	cadena=cadena+"<h3>Usuario</h3>";
@@ -64,7 +74,8 @@ function mostrarPartida(data){
 	$('#mLP').remove();
 	var cadena="<div id='mP'>";
 	cadena=cadena+"<h3>Bienvenido a la partida: "+data.nombre+"</h3>";
-	cadena=cadena+'<p><button type="button" id="salirBtn" class="btn btn-primary btn-md" onclick="ws.salir()"">Salir</button></p></div>';
+	cadena=cadena+'<p><button type="button" id="preparadoBtn" class="btn btn-primary btn-md" onclick="ws.preparado()"">Preparado</button> ';	
+	cadena=cadena+' <button type="button" id="salirBtn" class="btn btn-primary btn-md" onclick="ws.salir()"">Salir</button></p></div>';
 	$('#inicio').append(cadena);
 }
 
@@ -103,7 +114,7 @@ function mostrarListaJugadores(jugadores){
   		cadena=cadena+'<tr>'
   		cadena=cadena+'<td>'+jugadores[key].nick+'</td>';
   		cadena=cadena+'<td>-</td>';
- 		cadena=cadena+'<td>Preparado</td>';
+ 		cadena=cadena+'<td>'+jugadores[key].estado+'</td>';
  		cadena=cadena+'</tr>';
   	};
   	cadena=cadena+"</tbody></table></div>";

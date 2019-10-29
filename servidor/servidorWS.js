@@ -19,7 +19,7 @@ function ServidorWS(){
 				});
     		});
     		socket.on('obtenerPartidas',function(){
-    			juego.obtenerPartidas(function(partidas){
+    			juego.obtenerPartidasInicial(function(partidas){
 					cli.enviarRemitente(socket,"partidas",partidas);
 				});
     		});
@@ -36,6 +36,11 @@ function ServidorWS(){
         			cli.enviarATodosMenosRemitente(socket,idp,"saleJugador",partida.jugadores);
                 }
     		});
+            socket.on("preparado",function(idp,nick){
+                juego.jugadorPreparado(idp,nick,function(jugadores){
+                    cli.enviarATodos(io,idp,"otropreparado",jugadores);                    
+                });                
+            });
     	});
     }
 }

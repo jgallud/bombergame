@@ -25,6 +25,13 @@ app.get("/agregarUsuario/:nick",function(request,response){
 	});
 });
 
+app.get("/comprobarUsuario/:nick",function(request,response){
+	var nick=request.params.nick;
+	juego.obtenerUsuario(nick,function(usr){
+		response.send(usr);
+	})
+});
+
 app.get("/crearPartida/:nombrePartida/:nick",function(request,response){
 	var nick=request.params.nick;
 	var nombrePartida=request.params.nombrePartida;
