@@ -37,8 +37,11 @@ function ServidorWS(){
                 }
     		});
             socket.on("preparado",function(idp,nick){
-                juego.jugadorPreparado(idp,nick,function(jugadores){
-                    cli.enviarATodos(io,idp,"otropreparado",jugadores);                    
+                juego.jugadorPreparado(idp,nick,function(partida){
+                    cli.enviarATodos(io,idp,"otropreparado",partida.jugadores);                    
+                    if (partida.fase.nombre=="jugando"){
+                        cli.enviarATodos(io,idp,"aJugar",{});
+                    }
                 });                
             });
     	});

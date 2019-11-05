@@ -47,13 +47,17 @@ function ClienteWS(nick){
 			mostrarListaJugadores(jugadores);
 		});
 		this.socket.on('saliste',function(){
-			mostrarCrearPartida(this.nick);
+			mostrarCrearPartida(cli.nick);
+			borrarCanvas();
 		});
 		this.socket.on('saleJugador',function(jugadores){
 			mostrarListaJugadores(jugadores);
 		});
 		this.socket.on('otropreparado',function(jugadores){
 			mostrarListaJugadores(jugadores);
-		})
+		});
+		this.socket.on('aJugar',function(){
+			mostrarCanvas();
+		});
 	}
 }

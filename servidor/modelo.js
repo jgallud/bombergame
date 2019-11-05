@@ -79,12 +79,21 @@ function Juego(){
 		callback(jugadores);
 	}
 	this.jugadorPreparado=function(idp,nick,callback){
-		var jugadores=[];
+		//var jugadores=[];
 		if (this.partidas[idp]){
 			this.partidas[idp].jugadorPreparado(nick);
-			jugadores=this.partidas[idp].jugadores;
+			this.partidas[idp].jugadores;
 		}
-		callback(jugadores);
+		callback(this.partidas[idp]);
+	}
+	this.cerrarSesion=function(nick,callback){
+		var data={res:"nook"};
+		if(this.usuarios[nick]){
+			delete this.usuarios[nick];			
+			data={res:"ok"};
+			console.log("Usuario "+nick+" cierra sesión");
+		}
+		callback(data);
 	}
 }
 

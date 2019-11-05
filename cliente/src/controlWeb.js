@@ -11,11 +11,16 @@ function comprobarUsuario(){
 }
 
 function mostrarAgregarUsuario(){
+	$('#mLP').remove();
+	$('#mP').remove();
+	$('#mCP').remove();
 	var cadena="<div id='mAU'>";
 	cadena=cadena+"<h3>Usuario</h3>";
+	cadena=cadena+"<div class='row'><div class='col-sm-6'>";
 	cadena=cadena+'<input id="nombre" type="text" class="form-control" name="nombre" placeholder="Nombre usuario">';		
+	cadena=cadena+"</div><div class='col-sm-6'>"
 	cadena=cadena+'<button type="button" id="inicioBtn" class="btn btn-primary btn-md">Iniciar Usuario</button>';	
-	cadena=cadena+"</div>";
+	cadena=cadena+"</div></div>";
 
 	$('#inicio').append(cadena);
 	$('#inicioBtn').on('click',function(){
@@ -45,13 +50,14 @@ function mostrarCrearPartida(nick){
 	$('#mP').remove();
 	var cadena="<div id='mCP'>";
 	cadena=cadena+"<h3>Bienvenido "+nick+"</h3>";
+	cadena=cadena+'<p><button type="button" id="cerrarSesion" class="btn btn-primary btn-md" onclick="rest.cerrarSesion()">Cerrar sesión</button></p>';
 	cadena=cadena+"<div class='row'><div class='col-sm-8'>";
 	cadena=cadena+"<h3>Crear Partida</h3>";
 	cadena=cadena+'<input id="nombrePartida" type="text" class="form-control" name="nombrePartida" placeholder="Nombre partida">';		
 	cadena=cadena+'<button type="button" id="crearPartidaBtn" class="btn btn-primary btn-md">Crear partida</button>';	
 	cadena=cadena+"</div><div class='col-sm-4'><h3>Unirse</h3>";
 	cadena=cadena+'<button type="button" id="unirseAPartidaBtn" class="btn btn-primary btn-md">Unirse a partida</button>';
-	cadena=cadena+"</div>";
+	cadena=cadena+"</div></div>";
 
 	$('#inicio').append(cadena);
 	$('#crearPartidaBtn').on('click',function(){
@@ -119,4 +125,17 @@ function mostrarListaJugadores(jugadores){
   	};
   	cadena=cadena+"</tbody></table></div>";
   	$('#mP').append(cadena);
+}
+
+function mostrarCanvas(){
+	$('#mLJ').remove();
+	game = new Phaser.Game(240, 240, Phaser.CANVAS,"juego");
+	game.state.add("BootState", new Bomberman.BootState());
+	game.state.add("LoadingState", new Bomberman.LoadingState());
+	game.state.add("TiledState", new Bomberman.TiledState());
+	game.state.start("BootState", true, false, "assets/levels/level1.json", "TiledState");
+}
+
+function borrarCanvas(){
+	$('canvas').remove();
 }
