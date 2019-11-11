@@ -44,6 +44,11 @@ function ServidorWS(){
                     }
                 });                
             });
+            socket.on("enviarResultado",function(idp,nick,resultado){
+                juego.enviarResultado(idp,nick,resultado,function(){ //function(resultados) 
+                    cli.enviarRemitente(socket,"anotado"); // ,resultados);
+                });
+            });
     	});
     }
 }

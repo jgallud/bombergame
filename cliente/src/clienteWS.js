@@ -24,6 +24,9 @@ function ClienteWS(nick){
 		$('#preparadoBtn').remove();
 		this.socket.emit("preparado",this.idp,this.nick);
 	}
+	this.enviarResultado=function(nivel,vidas){
+		this.socket.emit("enviarResultado",this.idp,this.nick,{"nivel":nivel,"vidas":vidas});
+	}
 	this.lanzarSocketSrv=function(){
 		var cli=this;
 		this.socket.on('connect', function(){   						
@@ -58,6 +61,10 @@ function ClienteWS(nick){
 		});
 		this.socket.on('aJugar',function(){
 			mostrarCanvas();
+		});
+		this.socket.on('anotado',function(){ //function(resultados)
+			//mostrarListaResultados(resultados)
+			console.log("Resultado anotado");
 		});
 	}
 }

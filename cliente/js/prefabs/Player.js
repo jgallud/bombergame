@@ -8,6 +8,7 @@ Bomberman.Player = function (game_state, name, position, properties) {
     
     this.walking_speed = +properties.walking_speed;
     this.bomb_duration = +properties.bomb_duration;
+    this.vidas= +properties.vidas;
     this.dropping_bomb = false;
     
     this.animations.add("walking_down", [1, 2, 3], 10, true);
@@ -19,6 +20,8 @@ Bomberman.Player = function (game_state, name, position, properties) {
 
     this.game_state.game.physics.arcade.enable(this);
     this.body.setSize(14, 12, 0, 4);
+
+    this.initial_position = new Phaser.Point(this.x, this.y);
 
     this.cursors = this.game_state.game.input.keyboard.createCursorKeys();
 };
@@ -84,6 +87,20 @@ Bomberman.Player.prototype.update = function () {
         this.dropping_bomb = false;
     }
 };
+
+Bomberman.Player.prototype.kill=function(){
+    console.log("me han alcanzado");
+    this.vidas = this.vidas-1;
+    if (this.vidas<=0){
+        alert('Game over');
+        this.game_state.game_over();
+        ws.enviarResultado(1,this.vidas);
+    }
+    else{
+        this.x=this.initial_position.x;
+        this.y=this.initial_position.y;
+    }
+}
 
 Bomberman.Player.prototype.drop_bomb = function () {
     "use strict";
