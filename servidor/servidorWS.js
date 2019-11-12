@@ -45,10 +45,25 @@ function ServidorWS(){
                 });                
             });
             socket.on("enviarResultado",function(idp,nick,resultado){
-                juego.enviarResultado(idp,nick,resultado,function(){ //function(resultados) 
-                    cli.enviarRemitente(socket,"anotado"); // ,resultados);
+                juego.enviarResultado(idp,nick,resultado,function(partida){ //function(resultados) 
+                    if (partida && partida.fase.nombre=="final"){
+                        cli.enviarATodos(io,idp,"finPartida",{}); //resultados
+                    }
+                    else{
+                        cli.enviarRemitente(socket,"anotado"); // ,resultados);
+                    }
                 });
             });
+            socket.on("muereEnemigo",function(idp,nick,jugadores){
+                juego.muereEnemigo(idp,nick,jugadores,function(partida){
+                    if (partida && partida.fase.nombre=="final"){
+                        cli.enviarATodos(io,idp,"finPartida",{}); //resultados
+                    }
+                    else{
+                        cli.enviarRemitente(socket,"anotado"); // ,resultados);
+                    }
+                })
+            })
     	});
     }
 }

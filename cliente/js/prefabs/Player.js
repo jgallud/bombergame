@@ -5,6 +5,8 @@ Bomberman.Player = function (game_state, name, position, properties) {
     Bomberman.Prefab.call(this, game_state, name, position, properties);
     
     this.anchor.setTo(0.5);
+    this.name=name;
+    this.estado="vivo";
     
     this.walking_speed = +properties.walking_speed;
     this.bomb_duration = +properties.bomb_duration;
@@ -78,27 +80,31 @@ Bomberman.Player.prototype.update = function () {
         this.frame = this.stopped_frames[this.body.facing];
     }
     
-    if (!this.dropping_bomb && this.game_state.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+    if (!this.dropping_bomb && this.game_state.input.keyboard.isDown(Phaser.Keyboard.B)) {
         this.drop_bomb();
         this.dropping_bomb = true;
     }
     
-    if (this.dropping_bomb && !this.game_state.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+    if (this.dropping_bomb && !this.game_state.input.keyboard.isDown(Phaser.Keyboard.B)) {
         this.dropping_bomb = false;
     }
 };
 
 Bomberman.Player.prototype.kill=function(){
-    console.log("me han alcanzado");
-    this.vidas = this.vidas-1;
-    if (this.vidas<=0){
-        alert('Game over');
-        this.game_state.game_over();
-        ws.enviarResultado(1,this.vidas);
-    }
-    else{
-        this.x=this.initial_position.x;
-        this.y=this.initial_position.y;
+    if (this.estado=="vivo"){
+        console.log("me han alcanzado");
+        this.vidas = this.vidas-1;
+        if (this.vidas<=0){
+            this.estado="muerto";
+            this.game_state.jugadores[ws.nick].vidas=this.vidas;
+            ws.enviarResultado(this.game_state.jugadores);
+            //alert('Game over');
+            this.game_state.game_over();
+        }
+        else{
+            this.x=this.initial_position.x;
+            this.y=this.initial_position.y;
+        }
     }
 }
 

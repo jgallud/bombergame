@@ -24,8 +24,11 @@ function ClienteWS(nick){
 		$('#preparadoBtn').remove();
 		this.socket.emit("preparado",this.idp,this.nick);
 	}
-	this.enviarResultado=function(nivel,vidas){
-		this.socket.emit("enviarResultado",this.idp,this.nick,{"nivel":nivel,"vidas":vidas});
+	this.enviarResultado=function(jugadores){
+		this.socket.emit("enviarResultado",this.idp,this.nick,jugadores);
+	}
+	this.muereEnemigo=function(jugadores){
+		this.socket.emit("muereEnemigo",this.idp,this.nick,jugadores);
 	}
 	this.lanzarSocketSrv=function(){
 		var cli=this;
@@ -66,5 +69,12 @@ function ClienteWS(nick){
 			//mostrarListaResultados(resultados)
 			console.log("Resultado anotado");
 		});
+		this.socket.on('finPartida',function(){
+			console.log("Fin de la partida");
+			alert("Fin de la partida");
+			// mostrarCrearPartida(cli.nick);
+			// borrarCanvas();
+			cli.salir();
+		})
 	}
 }

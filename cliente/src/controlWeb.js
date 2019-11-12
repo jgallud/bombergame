@@ -46,6 +46,7 @@ function mostrarAviso(msg){
 }
 
 function mostrarCrearPartida(nick){
+	$('#mCP').remove();
 	$('#mLP').remove();
 	$('#mP').remove();
 	var cadena="<div id='mCP'>";
