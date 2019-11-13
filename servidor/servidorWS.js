@@ -44,8 +44,8 @@ function ServidorWS(){
                     }
                 });                
             });
-            socket.on("enviarResultado",function(idp,nick,resultado){
-                juego.enviarResultado(idp,nick,resultado,function(partida){ //function(resultados) 
+            socket.on("enviarResultado",function(idp,nick){
+                juego.enviarResultado(idp,nick,function(partida){ //function(resultados) 
                     if (partida && partida.fase.nombre=="final"){
                         cli.enviarATodos(io,idp,"finPartida",{}); //resultados
                     }
@@ -54,8 +54,8 @@ function ServidorWS(){
                     }
                 });
             });
-            socket.on("muereEnemigo",function(idp,nick,jugadores){
-                juego.muereEnemigo(idp,nick,jugadores,function(partida){
+            socket.on("muereEnemigo",function(idp,nick,enemy){
+                juego.muereEnemigo(idp,nick,enemy,function(partida){
                     if (partida && partida.fase.nombre=="final"){
                         cli.enviarATodos(io,idp,"finPartida",{}); //resultados
                     }
@@ -63,7 +63,17 @@ function ServidorWS(){
                         cli.enviarRemitente(socket,"anotado"); // ,resultados);
                     }
                 })
-            })
+            });
+            socket.on("jugadorHerido",function(idp,nick){
+                juego.jugadorHerido(idp,nick,function(partida){
+                    if (partida && partida.fase.nombre=="final"){
+                        cli.enviarATodos(io,idp,"finPartida",{}); //resultados
+                    }
+                    else{
+                        cli.enviarRemitente(socket,"sigueVivo"); // ,resultados);
+                    }
+                })
+            });
     	});
     }
 }

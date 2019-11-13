@@ -7,6 +7,7 @@ Bomberman.Player = function (game_state, name, position, properties) {
     this.anchor.setTo(0.5);
     this.name=name;
     this.estado="vivo";
+    ws.jugador=this;
     
     this.walking_speed = +properties.walking_speed;
     this.bomb_duration = +properties.bomb_duration;
@@ -24,6 +25,7 @@ Bomberman.Player = function (game_state, name, position, properties) {
     this.body.setSize(14, 12, 0, 4);
 
     this.initial_position = new Phaser.Point(this.x, this.y);
+    //this.ant=this.initial_position;
 
     this.cursors = this.game_state.game.input.keyboard.createCursorKeys();
 };
@@ -35,7 +37,7 @@ Bomberman.Player.prototype.update = function () {
     "use strict";
     this.game_state.game.physics.arcade.collide(this, this.game_state.layers.collision);
     this.game_state.game.physics.arcade.collide(this, this.game_state.groups.bombs);
-    this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.explosions, this.kill, null, this);
+    this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.explosions, this.bomba, null, this);
     this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.enemies, this.kill, null, this);
     
     if (this.cursors.left.isDown && this.body.velocity.x <= 0) {
@@ -90,22 +92,41 @@ Bomberman.Player.prototype.update = function () {
     }
 };
 
+Bomberman.Player.prototype.bomba=function(){
+    if (this.estado=="vivo"){
+        this.estado="herido";
+        console.log("impacto de bomba");
+        this.x=this.initial_position.x;
+        this.y=this.initial_position.y;
+        ws.jugadorHerido();
+    }
+
+}
+
 Bomberman.Player.prototype.kill=function(){
     if (this.estado=="vivo"){
-        console.log("me han alcanzado");
-        this.vidas = this.vidas-1;
-        if (this.vidas<=0){
-            this.estado="muerto";
-            this.game_state.jugadores[ws.nick].vidas=this.vidas;
-            ws.enviarResultado(this.game_state.jugadores);
-            //alert('Game over');
-            this.game_state.game_over();
+        this.estado="herido";
+        this.x=this.initial_position.x;
+        this.y=this.initial_position.y;
+        ws.jugadorHerido();
+        // console.log("me han alcanzado");
+        // this.vidas = this.vidas-1;
+        // if (this.vidas<=0){
+        //     this.estado="muerto";
+        //     this.game_state.jugadores[ws.nick].vidas=this.vidas;
+        //     ws.enviarResultado(this.game_state.jugadores);
+        //     //alert('Game over');
+        //     this.game_state.game_over();
         }
-        else{
-            this.x=this.initial_position.x;
-            this.y=this.initial_position.y;
-        }
-    }
+        // else{
+        //     this.x=this.initial_position.x;
+        //     this.y=this.initial_position.y;
+        // }
+   // }
+}
+
+Bomberman.Player.prototype.volverAInicio = function(){
+    this.estado="vivo";
 }
 
 Bomberman.Player.prototype.drop_bomb = function () {

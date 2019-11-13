@@ -2,6 +2,7 @@ function ClienteWS(nick){
 	this.socket=undefined;
 	this.nick=nick;
 	this.idp=undefined;
+	this.jugador=undefined;
 	this.ini=function(){
 		this.socket=io.connect();
 		this.lanzarSocketSrv();
@@ -24,11 +25,14 @@ function ClienteWS(nick){
 		$('#preparadoBtn').remove();
 		this.socket.emit("preparado",this.idp,this.nick);
 	}
-	this.enviarResultado=function(jugadores){
-		this.socket.emit("enviarResultado",this.idp,this.nick,jugadores);
+	this.enviarResultado=function(){
+		this.socket.emit("enviarResultado",this.idp,this.nick);
 	}
-	this.muereEnemigo=function(jugadores){
-		this.socket.emit("muereEnemigo",this.idp,this.nick,jugadores);
+	this.muereEnemigo=function(enemy){
+		this.socket.emit("muereEnemigo",this.idp,this.nick,enemy);
+	}
+	this.jugadorHerido=function(){
+		this.socket.emit("jugadorHerido",this.idp,this.nick);
 	}
 	this.lanzarSocketSrv=function(){
 		var cli=this;
@@ -75,6 +79,10 @@ function ClienteWS(nick){
 			// mostrarCrearPartida(cli.nick);
 			// borrarCanvas();
 			cli.salir();
+		});
+		this.socket.on("sigueVivo",function(){
+			console.log("sigue vivo");
+			cli.jugador.volverAInicio();
 		})
 	}
 }
