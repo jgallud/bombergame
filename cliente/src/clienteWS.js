@@ -76,8 +76,6 @@ function ClienteWS(nick){
 		this.socket.on('finPartida',function(){
 			console.log("Fin de la partida");
 			alert("Fin de la partida");
-			// mostrarCrearPartida(cli.nick);
-			// borrarCanvas();
 			cli.salir();
 		});
 		this.socket.on("sigueVivo",function(){

@@ -37,7 +37,7 @@ Bomberman.Player.prototype.update = function () {
     "use strict";
     this.game_state.game.physics.arcade.collide(this, this.game_state.layers.collision);
     this.game_state.game.physics.arcade.collide(this, this.game_state.groups.bombs);
-    this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.explosions, this.bomba, null, this);
+    this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.explosions, this.kill, null, this);
     this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.enemies, this.kill, null, this);
     
     if (this.cursors.left.isDown && this.body.velocity.x <= 0) {
@@ -92,16 +92,16 @@ Bomberman.Player.prototype.update = function () {
     }
 };
 
-Bomberman.Player.prototype.bomba=function(){
-    if (this.estado=="vivo"){
-        this.estado="herido";
-        console.log("impacto de bomba");
-        this.x=this.initial_position.x;
-        this.y=this.initial_position.y;
-        ws.jugadorHerido();
-    }
+// Bomberman.Player.prototype.bomba=function(){
+//     if (this.estado=="vivo"){
+//         this.estado="herido";
+//         console.log("impacto de bomba");
+//         this.x=this.initial_position.x;
+//         this.y=this.initial_position.y;
+//         ws.jugadorHerido();
+//     }
 
-}
+// }
 
 Bomberman.Player.prototype.kill=function(){
     if (this.estado=="vivo"){
@@ -109,20 +109,7 @@ Bomberman.Player.prototype.kill=function(){
         this.x=this.initial_position.x;
         this.y=this.initial_position.y;
         ws.jugadorHerido();
-        // console.log("me han alcanzado");
-        // this.vidas = this.vidas-1;
-        // if (this.vidas<=0){
-        //     this.estado="muerto";
-        //     this.game_state.jugadores[ws.nick].vidas=this.vidas;
-        //     ws.enviarResultado(this.game_state.jugadores);
-        //     //alert('Game over');
-        //     this.game_state.game_over();
-        }
-        // else{
-        //     this.x=this.initial_position.x;
-        //     this.y=this.initial_position.y;
-        // }
-   // }
+    }
 }
 
 Bomberman.Player.prototype.volverAInicio = function(){

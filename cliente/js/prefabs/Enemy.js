@@ -86,11 +86,5 @@ Bomberman.Enemy.prototype.kill=function(){
         this.game_state.enemigos[this.name]="muerto";
         Phaser.Sprite.prototype.kill.call(this);
         ws.muereEnemigo(this.name);
-        // if (this.game_state.todosEnemigosMuertos()){
-        //     console.log("Has ganado");
-        //     //alert('Game over');
-        //     this.game_state.game_over();
-        //     ws.enviarResultado(this.game_state.jugadores);
-        // }
     }
 }
